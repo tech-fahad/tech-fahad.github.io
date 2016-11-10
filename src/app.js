@@ -1,5 +1,8 @@
 import React from 'react'
-import { render } from 'react-dom'
+import {ReactDOM} from 'react-dom'
+import {render} from 'react-dom'
+ 
+import {Router, Route, browserHistory, Link, IndexRoute} from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import todoApp from './reducers'
@@ -54,9 +57,6 @@ class Git extends React.Component {
       );
   }
 
-        
-  
-
  
 }
 function FormattedBio (props) {
@@ -65,11 +65,59 @@ function FormattedBio (props) {
     );
 }
 
+function Todo () {
+  return (
+     <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
 
-render(
-  <Provider store={store}>
-<App />
+function Home () {
+  return (
+    <div>Home</div>
+  )
+}
+
+function GitSearch () {
+  return (
+     <div>git</div>
+  )
+}
+
+class Base extends React.Component {
+   render() {
+      return (
+         <div>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/todo">Todo</Link></li>
+              <li><Link to="/git">Git</Link></li>
+            </ul>
+				
+           {this.props.children}
+         </div>
+      )
+   }
+}
+
+// render(
+//   <Provider store={store}>
+// <App />
    
-  </Provider>,
-  document.getElementById('root')
+//   </Provider>,
+//   document.getElementById('root')
+// )
+
+
+render(   
+    <Router history = {browserHistory}>
+        <Route path = "/" component = {Base}>
+          <IndexRoute component = {Home} />
+          <Route path = "/" component = {Home} />
+          <Route path = "/todo" component = {Todo} />
+          <Route path = "/git" component = {GitSearch} />
+        </Route>
+    </Router>,
+   document.getElementById('root')
 )
