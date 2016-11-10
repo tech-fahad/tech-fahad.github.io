@@ -174,7 +174,7 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    'test'
+	    'Home'
 	  );
 	}
 	
@@ -185,6 +185,60 @@
 	    'git'
 	  );
 	}
+	
+	var Base = function (_React$Component2) {
+	  _inherits(Base, _React$Component2);
+	
+	  function Base() {
+	    _classCallCheck(this, Base);
+	
+	    return _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).apply(this, arguments));
+	  }
+	
+	  _createClass(Base, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/' },
+	              'Home'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/todo' },
+	              'Todo'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/git' },
+	              'Git'
+	            )
+	          )
+	        ),
+	        this.props.children
+	      );
+	    }
+	  }]);
+	
+	  return Base;
+	}(_react2.default.Component);
 	
 	// render(
 	//   <Provider store={store}>
@@ -200,12 +254,13 @@
 	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
-	    { path: '/', component: Home },
+	    { path: '/', component: Base },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: Home }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/todo', component: Todo }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/git', component: GitSearch })
 	  )
-	));
+	), document.getElementById('root'));
 
 /***/ },
 /* 1 */
