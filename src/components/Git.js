@@ -49,4 +49,72 @@ class Git extends React.Component {
 
  
 }
-export default Git
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+    this.state = {
+        repos:undefined,
+        bio:undefined,
+        isToggleOn: true
+    };
+    // This binding is necessary to make `this` work in the callback
+    this.handleClick = this.handleClick.bind(this);
+  }
+    onChange(state) {
+        this.setState(state);
+    }
+    callme() {
+        let temp = ["a","b"];
+      GitUsers.getGithubInfo(this.props.username).then(function(data) {
+         console.log(data);
+          temp = data.repos;
+    //   this.setState({
+    //     repos: data.repos,
+    //     bio: data.bio,
+    //     isToggleOn: !this.state.isToggleOn
+    //   });
+    });
+    return temp;
+  }
+
+  handleClick() {
+    // this.setState(prevState => ({
+    //   isToggleOn: !prevState.isToggleOn,
+    //   repos:this.callme()
+    // }));
+
+     GitUsers.getGithubInfo(this.props.username).then(function(data) {
+         console.log(data);
+      this.setState({
+        repos: data.repos,
+        bio: data.bio,
+        isToggleOn: false
+      });
+      
+    }.bind(this));
+
+  }
+  
+  //&& this.state.repos.length > 0 
+
+
+  render() {
+      //let repos = this.state.repos;
+    return (
+        
+        <div>
+            <button onClick={this.handleClick}>
+                {this.state.isToggleOn ? 'ON' : 'OFF'}
+            </button>
+            {this.state.repos && this.state.repos.length > 0 &&
+                <h2>
+            {this.state.repos[0].url}
+                </h2>
+            }
+        </div>
+      
+    );
+  }
+}
+export default Toggle
