@@ -1,5 +1,6 @@
 import React from 'react'
 import GitUsers from './GitUsers'
+import Bio from './Bio'
 
 class SearchUserProfile extends React.Component {
   constructor(props) {
@@ -73,17 +74,15 @@ class SearchUserProfile extends React.Component {
         <h1>Search Git Users</h1>
         <form onSubmit={this.handleSubmit}>
 
-        <input type="text" value={this.state.username} onChange={this.handleUserChange} />
+        <input type="text" value={this.state.username} onChange={this.handleUserChange} placeholder="tech-fahad" />
             <button type="submit">Go</button>
             { this.state.userNotFound &&
               <p>User not found</p>
             }
-            
             <ul>{repoList}</ul>
             {
             userBio && 
-            <img src={userBio.avatar_url} width="50" />
-            
+              <Bio user={userBio} />       
             }
             
         </form>

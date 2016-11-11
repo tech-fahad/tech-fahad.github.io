@@ -30000,7 +30000,8 @@
 	    _this.state = {
 	      repos: undefined,
 	      bio: undefined,
-	      username: ''
+	      username: '',
+	      userNotFound: false
 	    };
 	    // This binding is necessary to make `this` work in the callback
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -30016,18 +30017,21 @@
 	    key: 'handleSubmit',
 	    value: function handleSubmit(e) {
 	      e.preventDefault();
-	      // this.setState(prevState => ({
-	      //   isToggleOn: !prevState.isToggleOn,
-	      //   repos:this.callme()
-	      // }));
-	
 	      _GitUsers2.default.getGithubInfo(this.state.username).then(function (data) {
 	        console.log(data);
 	        this.setState({
 	          repos: data.repos,
 	          bio: data.bio,
-	          isToggleOn: false
+	          userNotFound: false,
+	          username: ''
 	        });
+	      }.bind(this), function (error) {
+	        this.setState({
+	          repos: undefined,
+	          bio: undefined,
+	          userNotFound: true
+	        });
+	        console.log(error);
 	      }.bind(this));
 	    }
 	  }, {
@@ -30064,20 +30068,81 @@
 	      }
 	
 	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUserChange }),
+	        'div',
+	        null,
 	        _react2.default.createElement(
-	          'button',
-	          { type: 'submit' },
-	          'Go'
-	        ),
-	        _react2.default.createElement(
-	          'ul',
+	          'h1',
 	          null,
-	          repoList
+	          'Search Git Users'
 	        ),
-	        userBio && _react2.default.createElement('img', { src: userBio.avatar_url, width: '50' })
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit },
+	          _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUserChange }),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'submit' },
+	            'Go'
+	          ),
+	          this.state.userNotFound && _react2.default.createElement(
+	            'p',
+	            null,
+	            'User not found'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { 'class': 'panel panel-default' },
+	            _react2.default.createElement(
+	              'div',
+	              { 'class': 'panel-heading' },
+	              'Panel heading'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { 'class': 'panel-body' },
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                '...'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { 'class': 'list-group' },
+	              _react2.default.createElement(
+	                'li',
+	                { 'class': 'list-group-item' },
+	                'Cras justo odio'
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { 'class': 'list-group-item' },
+	                'Dapibus ac facilisis in'
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { 'class': 'list-group-item' },
+	                'Morbi leo risus'
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { 'class': 'list-group-item' },
+	                'Porta ac consectetur ac'
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                { 'class': 'list-group-item' },
+	                'Vestibulum at eros'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            repoList
+	          ),
+	          userBio && _react2.default.createElement('img', { src: userBio.avatar_url, width: '50' })
+	        )
 	      );
 	    }
 	  }]);
