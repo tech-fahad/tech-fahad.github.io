@@ -29979,6 +29979,10 @@
 	
 	var _GitUsers2 = _interopRequireDefault(_GitUsers);
 	
+	var _Bio = __webpack_require__(/*! ./Bio */ 308);
+	
+	var _Bio2 = _interopRequireDefault(_Bio);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30078,7 +30082,7 @@
 	        _react2.default.createElement(
 	          'form',
 	          { onSubmit: this.handleSubmit },
-	          _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUserChange }),
+	          _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUserChange, placeholder: 'tech-fahad' }),
 	          _react2.default.createElement(
 	            'button',
 	            { type: 'submit' },
@@ -30090,58 +30094,11 @@
 	            'User not found'
 	          ),
 	          _react2.default.createElement(
-	            'div',
-	            { 'class': 'panel panel-default' },
-	            _react2.default.createElement(
-	              'div',
-	              { 'class': 'panel-heading' },
-	              'Panel heading'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { 'class': 'panel-body' },
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                '...'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'ul',
-	              { 'class': 'list-group' },
-	              _react2.default.createElement(
-	                'li',
-	                { 'class': 'list-group-item' },
-	                'Cras justo odio'
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                { 'class': 'list-group-item' },
-	                'Dapibus ac facilisis in'
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                { 'class': 'list-group-item' },
-	                'Morbi leo risus'
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                { 'class': 'list-group-item' },
-	                'Porta ac consectetur ac'
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                { 'class': 'list-group-item' },
-	                'Vestibulum at eros'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
 	            'ul',
 	            null,
 	            repoList
 	          ),
-	          userBio && _react2.default.createElement('img', { src: userBio.avatar_url, width: '50' })
+	          userBio && _react2.default.createElement(_Bio2.default, { user: userBio })
 	        )
 	      );
 	    }
@@ -31751,6 +31708,52 @@
 	  };
 	};
 
+
+/***/ },
+/* 308 */
+/*!*******************************!*\
+  !*** ./src/components/Bio.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Bio(props) {
+	  var values = [];
+	  for (var key in props.user) {
+	    props.user[key] && values.push(_react2.default.createElement(
+	      "p",
+	      { key: key },
+	      key,
+	      " => ",
+	      props.user[key]
+	    ));
+	  }
+	  return _react2.default.createElement(
+	    "div",
+	    null,
+	    _react2.default.createElement(
+	      "h3",
+	      null,
+	      props.user.login,
+	      "'s Bio"
+	    ),
+	    _react2.default.createElement("img", { src: props.user.avatar_url, width: "50" }),
+	    values
+	  );
+	}
+	
+	exports.default = Bio;
 
 /***/ }
 /******/ ]);
