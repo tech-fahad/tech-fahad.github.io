@@ -9,16 +9,7 @@ import todoApp from './reducers'
 import TodoApp from './components/TodoApp'
 import Home from './components/Home'
 import Git from './components/Git'
-
-
 let store = createStore(todoApp)
-
-
-function FormattedBio (props) {
-      return (
-      <p>{props.bio.url}</p>
-    );
-}
 
 function Todo () {
   return (
@@ -28,22 +19,24 @@ function Todo () {
   )
 }
 
-
-
-function GitSearch () {
-  return (
-     <Git />
-  )
-}
-
 class Base extends React.Component {
    render() {
+     var listStyle = {
+      padding: 10,
+      margin: 10,
+      backgroundColor: "#ffde00",
+      color: "#333",
+      display: "inline-block",
+      fontFamily: "monospace",
+      fontSize: "32px",
+      textAlign: "center"      
+    };  
       return (
          <div>
             <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/todo">Todo</Link></li>
-              <li><Link to="/git">Git</Link></li>
+              <li style={listStyle}><Link to="/">Home</Link></li>
+              <li style={listStyle}><Link to="/todo">Todo</Link></li>
+              <li style={listStyle}><Link to="/git">Git</Link></li>               
             </ul>
 				
            {this.props.children}
@@ -58,7 +51,7 @@ render(
           <IndexRoute component = {Home} />
           <Route path = "/" component = {Home} />
           <Route path = "/todo" component = {Todo} />
-          <Route path = "/git" component = {GitSearch} />
+          <Route path = "/git" component = {Git} />
         </Route>
     </Router>,
    document.getElementById('root')

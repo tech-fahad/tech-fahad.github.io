@@ -1,7 +1,7 @@
 import React from 'react'
 import GitUsers from './GitUsers'
 
-class Toggle extends React.Component {
+class SearchUserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -42,20 +42,43 @@ class Toggle extends React.Component {
   }
   
   render() {
+    var reposStyle = {
+      display: "block",
+      padding: 10,
+      margin: 10,
+      color: "#333",
+      fontFamily: "monospace",
+      fontSize: "14px"
+    };
+    let repos = undefined;  
+    let repoList = undefined;  
+    let userBio = undefined;  
+    if(this.state.repos) {
+      repos = this.state.repos;
+      repoList = repos.map((repo) =>
+        <li key={repo.id}>{repo.url}</li>
+      );
+    }
+    if(this.state.bio) {
+      userBio = this.state.bio;
+    }
+    
     return (
         
         <form onSubmit={this.handleSubmit}>
 
         <input type="text" value={this.state.username} onChange={this.handleUserChange} />
             <button type="submit">Go</button>
-            {this.state.repos && this.state.repos.length > 0 &&
-                <h2>
-                    {this.state.repos[0].url}
-                </h2>
+            <ul>{repoList}</ul>
+            {
+            userBio && 
+            <img src={userBio.avatar_url} width="50" />
+            
             }
+            
         </form>
       
     );
   }
 }
-export default Toggle
+export default SearchUserProfile
