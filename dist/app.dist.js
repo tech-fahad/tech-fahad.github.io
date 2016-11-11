@@ -67,13 +67,17 @@
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _App = __webpack_require__(/*! ./components/App */ 271);
+	var _TodoApp = __webpack_require__(/*! ./components/TodoApp */ 271);
 	
-	var _App2 = _interopRequireDefault(_App);
+	var _TodoApp2 = _interopRequireDefault(_TodoApp);
 	
-	var _GitUsers = __webpack_require__(/*! ./components/GitUsers */ 280);
+	var _Home = __webpack_require__(/*! ./components/Home */ 280);
 	
-	var _GitUsers2 = _interopRequireDefault(_GitUsers);
+	var _Home2 = _interopRequireDefault(_Home);
+	
+	var _Git = __webpack_require__(/*! ./components/Git */ 281);
+	
+	var _Git2 = _interopRequireDefault(_Git);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -84,75 +88,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var store = (0, _redux.createStore)(_reducers2.default);
-	
-	var Git = function (_React$Component) {
-	  _inherits(Git, _React$Component);
-	
-	  function Git(props) {
-	    _classCallCheck(this, Git);
-	
-	    var _this = _possibleConstructorReturn(this, (Git.__proto__ || Object.getPrototypeOf(Git)).call(this, props));
-	
-	    _this.state = {
-	      repos: {},
-	      bio: {},
-	      isToggleOn: true
-	    };
-	    _this.handleClick = _this.handleClick.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Git, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      this.setState(function (prevState) {
-	        return {
-	          isToggleOn: !prevState.isToggleOn
-	        };
-	      });
-	    }
-	  }, {
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
-	        this.setState = {
-	          repos: data.repos,
-	          bio: data.bio,
-	          isToggleOn: true
-	        };
-	      }.bind(this));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      // if (this.state) {
-	      //   return <FormattedBio bio={this.state.bio} />
-	      // }
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          'Loading...'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          'Remove'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.handleClick },
-	          this.state.isToggleOn ? 'ON' : 'OFF'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Git;
-	}(_react2.default.Component);
 	
 	function FormattedBio(props) {
 	  return _react2.default.createElement(
@@ -166,28 +101,16 @@
 	  return _react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: store },
-	    _react2.default.createElement(_App2.default, null)
-	  );
-	}
-	
-	function Home() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    'Home'
+	    _react2.default.createElement(_TodoApp2.default, null)
 	  );
 	}
 	
 	function GitSearch() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    'git'
-	  );
+	  return _react2.default.createElement(_Git2.default, { username: 'tech-fahad' });
 	}
 	
-	var Base = function (_React$Component2) {
-	  _inherits(Base, _React$Component2);
+	var Base = function (_React$Component) {
+	  _inherits(Base, _React$Component);
 	
 	  function Base() {
 	    _classCallCheck(this, Base);
@@ -240,23 +163,14 @@
 	  return Base;
 	}(_react2.default.Component);
 	
-	// render(
-	//   <Provider store={store}>
-	// <App />
-	
-	//   </Provider>,
-	//   document.getElementById('root')
-	// )
-	
-	
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: Base },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: Home }),
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/todo', component: Todo }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/git', component: GitSearch })
 	  )
@@ -29576,9 +29490,9 @@
 
 /***/ },
 /* 271 */
-/*!*******************************!*\
-  !*** ./src/components/App.js ***!
-  \*******************************/
+/*!***********************************!*\
+  !*** ./src/components/TodoApp.js ***!
+  \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29609,6 +29523,11 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
+	    _react2.default.createElement(
+	      'h1',
+	      null,
+	      'Todo'
+	    ),
 	    _react2.default.createElement(_AddTodo2.default, null),
 	    _react2.default.createElement(_VisibleTodoList2.default, null),
 	    _react2.default.createElement(_Footer2.default, null)
@@ -30007,6 +29926,231 @@
 
 /***/ },
 /* 280 */
+/*!********************************!*\
+  !*** ./src/components/Home.js ***!
+  \********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Home = function Home() {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Home'
+	        ),
+	        'This is our home page.'
+	    );
+	};
+	
+	exports.default = Home;
+
+/***/ },
+/* 281 */
+/*!*******************************!*\
+  !*** ./src/components/Git.js ***!
+  \*******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _GitUsers = __webpack_require__(/*! ./GitUsers */ 282);
+	
+	var _GitUsers2 = _interopRequireDefault(_GitUsers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Git = function (_React$Component) {
+	  _inherits(Git, _React$Component);
+	
+	  function Git(props) {
+	    _classCallCheck(this, Git);
+	
+	    var _this = _possibleConstructorReturn(this, (Git.__proto__ || Object.getPrototypeOf(Git)).call(this, props));
+	
+	    _this.state = {
+	      repos: {},
+	      bio: {},
+	      isToggleOn: true
+	    };
+	    _this.handleClick = _this.handleClick.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Git, [{
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      this.setState(function (prevState) {
+	        return {
+	          isToggleOn: !prevState.isToggleOn
+	        };
+	      });
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
+	        this.setState = {
+	          repos: data.repos,
+	          bio: data.bio,
+	          isToggleOn: true
+	        };
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      // if (this.state) {
+	      //   return <FormattedBio bio={this.state.bio} />
+	      // }
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Git'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'Loading...'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          null,
+	          'Remove'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.handleClick },
+	          this.state.isToggleOn ? 'ON' : 'OFF'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Git;
+	}(_react2.default.Component);
+	
+	var Toggle = function (_React$Component2) {
+	  _inherits(Toggle, _React$Component2);
+	
+	  function Toggle(props) {
+	    _classCallCheck(this, Toggle);
+	
+	    var _this2 = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
+	
+	    _this2.onChange = _this2.onChange.bind(_this2);
+	    _this2.state = {
+	      repos: undefined,
+	      bio: undefined,
+	      isToggleOn: true
+	    };
+	    // This binding is necessary to make `this` work in the callback
+	    _this2.handleClick = _this2.handleClick.bind(_this2);
+	    return _this2;
+	  }
+	
+	  _createClass(Toggle, [{
+	    key: 'onChange',
+	    value: function onChange(state) {
+	      this.setState(state);
+	    }
+	  }, {
+	    key: 'callme',
+	    value: function callme() {
+	      var temp = ["a", "b"];
+	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
+	        console.log(data);
+	        temp = data.repos;
+	        //   this.setState({
+	        //     repos: data.repos,
+	        //     bio: data.bio,
+	        //     isToggleOn: !this.state.isToggleOn
+	        //   });
+	      });
+	      return temp;
+	    }
+	  }, {
+	    key: 'handleClick',
+	    value: function handleClick() {
+	      // this.setState(prevState => ({
+	      //   isToggleOn: !prevState.isToggleOn,
+	      //   repos:this.callme()
+	      // }));
+	
+	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
+	        console.log(data);
+	        this.setState({
+	          repos: data.repos,
+	          bio: data.bio,
+	          isToggleOn: false
+	        });
+	      }.bind(this));
+	    }
+	
+	    //&& this.state.repos.length > 0 
+	
+	
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      //let repos = this.state.repos;
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.handleClick },
+	          this.state.isToggleOn ? 'ON' : 'OFF'
+	        ),
+	        this.state.repos && this.state.repos.length > 0 && _react2.default.createElement(
+	          'h2',
+	          null,
+	          this.state.repos[0].url
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Toggle;
+	}(_react2.default.Component);
+	
+	exports.default = Toggle;
+
+/***/ },
+/* 282 */
 /*!************************************!*\
   !*** ./src/components/GitUsers.js ***!
   \************************************/
@@ -30022,7 +30166,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(/*! axios */ 281);
+	var _axios = __webpack_require__(/*! axios */ 283);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -30050,16 +30194,16 @@
 	exports.default = GitUsers;
 
 /***/ },
-/* 281 */
+/* 283 */
 /*!**************************!*\
   !*** ./~/axios/index.js ***!
   \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/axios */ 282);
+	module.exports = __webpack_require__(/*! ./lib/axios */ 284);
 
 /***/ },
-/* 282 */
+/* 284 */
 /*!******************************!*\
   !*** ./~/axios/lib/axios.js ***!
   \******************************/
@@ -30067,9 +30211,9 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 283);
-	var bind = __webpack_require__(/*! ./helpers/bind */ 284);
-	var Axios = __webpack_require__(/*! ./core/Axios */ 285);
+	var utils = __webpack_require__(/*! ./utils */ 285);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 286);
+	var Axios = __webpack_require__(/*! ./core/Axios */ 287);
 	
 	/**
 	 * Create an instance of Axios
@@ -30102,15 +30246,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 303);
-	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 304);
-	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 300);
+	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 305);
+	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 306);
+	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 302);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(/*! ./helpers/spread */ 305);
+	axios.spread = __webpack_require__(/*! ./helpers/spread */ 307);
 	
 	module.exports = axios;
 	
@@ -30119,7 +30263,7 @@
 
 
 /***/ },
-/* 283 */
+/* 285 */
 /*!******************************!*\
   !*** ./~/axios/lib/utils.js ***!
   \******************************/
@@ -30127,7 +30271,7 @@
 
 	'use strict';
 	
-	var bind = __webpack_require__(/*! ./helpers/bind */ 284);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 286);
 	
 	/*global toString:true*/
 	
@@ -30427,7 +30571,7 @@
 
 
 /***/ },
-/* 284 */
+/* 286 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/bind.js ***!
   \*************************************/
@@ -30447,7 +30591,7 @@
 
 
 /***/ },
-/* 285 */
+/* 287 */
 /*!***********************************!*\
   !*** ./~/axios/lib/core/Axios.js ***!
   \***********************************/
@@ -30455,12 +30599,12 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(/*! ./../defaults */ 286);
-	var utils = __webpack_require__(/*! ./../utils */ 283);
-	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 297);
-	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 298);
-	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 301);
-	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 302);
+	var defaults = __webpack_require__(/*! ./../defaults */ 288);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
+	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 299);
+	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 300);
+	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 303);
+	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 304);
 	
 	/**
 	 * Create a new instance of Axios
@@ -30541,7 +30685,7 @@
 
 
 /***/ },
-/* 286 */
+/* 288 */
 /*!*********************************!*\
   !*** ./~/axios/lib/defaults.js ***!
   \*********************************/
@@ -30549,8 +30693,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 283);
-	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 287);
+	var utils = __webpack_require__(/*! ./utils */ 285);
+	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 289);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -30567,10 +30711,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(/*! ./adapters/xhr */ 288);
+	    adapter = __webpack_require__(/*! ./adapters/xhr */ 290);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(/*! ./adapters/http */ 288);
+	    adapter = __webpack_require__(/*! ./adapters/http */ 290);
 	  }
 	  return adapter;
 	}
@@ -30637,7 +30781,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 287 */
+/* 289 */
 /*!****************************************************!*\
   !*** ./~/axios/lib/helpers/normalizeHeaderName.js ***!
   \****************************************************/
@@ -30645,7 +30789,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ../utils */ 283);
+	var utils = __webpack_require__(/*! ../utils */ 285);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -30658,7 +30802,7 @@
 
 
 /***/ },
-/* 288 */
+/* 290 */
 /*!*************************************!*\
   !*** ./~/axios/lib/adapters/xhr.js ***!
   \*************************************/
@@ -30666,13 +30810,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
-	var settle = __webpack_require__(/*! ./../core/settle */ 289);
-	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 292);
-	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 293);
-	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 294);
-	var createError = __webpack_require__(/*! ../core/createError */ 290);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(/*! ./../helpers/btoa */ 295);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
+	var settle = __webpack_require__(/*! ./../core/settle */ 291);
+	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 294);
+	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 295);
+	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 296);
+	var createError = __webpack_require__(/*! ../core/createError */ 292);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(/*! ./../helpers/btoa */ 297);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -30768,7 +30912,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 296);
+	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 298);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -30845,7 +30989,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 289 */
+/* 291 */
 /*!************************************!*\
   !*** ./~/axios/lib/core/settle.js ***!
   \************************************/
@@ -30853,7 +30997,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(/*! ./createError */ 290);
+	var createError = __webpack_require__(/*! ./createError */ 292);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -30879,7 +31023,7 @@
 
 
 /***/ },
-/* 290 */
+/* 292 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/core/createError.js ***!
   \*****************************************/
@@ -30887,7 +31031,7 @@
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(/*! ./enhanceError */ 291);
+	var enhanceError = __webpack_require__(/*! ./enhanceError */ 293);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -30905,7 +31049,7 @@
 
 
 /***/ },
-/* 291 */
+/* 293 */
 /*!******************************************!*\
   !*** ./~/axios/lib/core/enhanceError.js ***!
   \******************************************/
@@ -30933,7 +31077,7 @@
 
 
 /***/ },
-/* 292 */
+/* 294 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/helpers/buildURL.js ***!
   \*****************************************/
@@ -30941,7 +31085,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -31010,7 +31154,7 @@
 
 
 /***/ },
-/* 293 */
+/* 295 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/helpers/parseHeaders.js ***!
   \*********************************************/
@@ -31018,7 +31162,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
 	
 	/**
 	 * Parse headers into an object
@@ -31056,7 +31200,7 @@
 
 
 /***/ },
-/* 294 */
+/* 296 */
 /*!************************************************!*\
   !*** ./~/axios/lib/helpers/isURLSameOrigin.js ***!
   \************************************************/
@@ -31064,7 +31208,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31133,7 +31277,7 @@
 
 
 /***/ },
-/* 295 */
+/* 297 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/btoa.js ***!
   \*************************************/
@@ -31178,7 +31322,7 @@
 
 
 /***/ },
-/* 296 */
+/* 298 */
 /*!****************************************!*\
   !*** ./~/axios/lib/helpers/cookies.js ***!
   \****************************************/
@@ -31186,7 +31330,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31240,7 +31384,7 @@
 
 
 /***/ },
-/* 297 */
+/* 299 */
 /*!************************************************!*\
   !*** ./~/axios/lib/core/InterceptorManager.js ***!
   \************************************************/
@@ -31248,7 +31392,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -31301,7 +31445,7 @@
 
 
 /***/ },
-/* 298 */
+/* 300 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/core/dispatchRequest.js ***!
   \*********************************************/
@@ -31309,10 +31453,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
-	var transformData = __webpack_require__(/*! ./transformData */ 299);
-	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 300);
-	var defaults = __webpack_require__(/*! ../defaults */ 286);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
+	var transformData = __webpack_require__(/*! ./transformData */ 301);
+	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 302);
+	var defaults = __webpack_require__(/*! ../defaults */ 288);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -31389,7 +31533,7 @@
 
 
 /***/ },
-/* 299 */
+/* 301 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/core/transformData.js ***!
   \*******************************************/
@@ -31397,7 +31541,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 283);
+	var utils = __webpack_require__(/*! ./../utils */ 285);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -31418,7 +31562,7 @@
 
 
 /***/ },
-/* 300 */
+/* 302 */
 /*!****************************************!*\
   !*** ./~/axios/lib/cancel/isCancel.js ***!
   \****************************************/
@@ -31432,7 +31576,7 @@
 
 
 /***/ },
-/* 301 */
+/* 303 */
 /*!**********************************************!*\
   !*** ./~/axios/lib/helpers/isAbsoluteURL.js ***!
   \**********************************************/
@@ -31455,7 +31599,7 @@
 
 
 /***/ },
-/* 302 */
+/* 304 */
 /*!********************************************!*\
   !*** ./~/axios/lib/helpers/combineURLs.js ***!
   \********************************************/
@@ -31476,7 +31620,7 @@
 
 
 /***/ },
-/* 303 */
+/* 305 */
 /*!**************************************!*\
   !*** ./~/axios/lib/cancel/Cancel.js ***!
   \**************************************/
@@ -31504,7 +31648,7 @@
 
 
 /***/ },
-/* 304 */
+/* 306 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/cancel/CancelToken.js ***!
   \*******************************************/
@@ -31512,7 +31656,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(/*! ./Cancel */ 303);
+	var Cancel = __webpack_require__(/*! ./Cancel */ 305);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -31570,7 +31714,7 @@
 
 
 /***/ },
-/* 305 */
+/* 307 */
 /*!***************************************!*\
   !*** ./~/axios/lib/helpers/spread.js ***!
   \***************************************/

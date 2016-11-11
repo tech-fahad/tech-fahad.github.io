@@ -32,7 +32,7 @@ function Todo () {
 
 function GitSearch () {
   return (
-     <Git username="tech-fahad" />
+     <Git />
   )
 }
 
