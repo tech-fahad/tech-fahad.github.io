@@ -89,24 +89,12 @@
 	
 	var store = (0, _redux.createStore)(_reducers2.default);
 	
-	function FormattedBio(props) {
-	  return _react2.default.createElement(
-	    'p',
-	    null,
-	    props.bio.url
-	  );
-	}
-	
 	function Todo() {
 	  return _react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: store },
 	    _react2.default.createElement(_TodoApp2.default, null)
 	  );
-	}
-	
-	function GitSearch() {
-	  return _react2.default.createElement(_Git2.default, { username: 'tech-fahad' });
 	}
 	
 	var Base = function (_React$Component) {
@@ -121,6 +109,16 @@
 	  _createClass(Base, [{
 	    key: 'render',
 	    value: function render() {
+	      var listStyle = {
+	        padding: 10,
+	        margin: 10,
+	        backgroundColor: "#ffde00",
+	        color: "#333",
+	        display: "inline-block",
+	        fontFamily: "monospace",
+	        fontSize: "32px",
+	        textAlign: "center"
+	      };
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -129,7 +127,7 @@
 	          null,
 	          _react2.default.createElement(
 	            'li',
-	            null,
+	            { style: listStyle },
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              { to: '/' },
@@ -138,7 +136,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            null,
+	            { style: listStyle },
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              { to: '/todo' },
@@ -147,7 +145,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            null,
+	            { style: listStyle },
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              { to: '/git' },
@@ -172,7 +170,7 @@
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/todo', component: Todo }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/git', component: GitSearch })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/git', component: _Git2.default })
 	  )
 	), document.getElementById('root'));
 
@@ -29989,128 +29987,41 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Git = function (_React$Component) {
-	  _inherits(Git, _React$Component);
+	var SearchUserProfile = function (_React$Component) {
+	  _inherits(SearchUserProfile, _React$Component);
 	
-	  function Git(props) {
-	    _classCallCheck(this, Git);
+	  function SearchUserProfile(props) {
+	    _classCallCheck(this, SearchUserProfile);
 	
-	    var _this = _possibleConstructorReturn(this, (Git.__proto__ || Object.getPrototypeOf(Git)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (SearchUserProfile.__proto__ || Object.getPrototypeOf(SearchUserProfile)).call(this, props));
 	
+	    _this.onChange = _this.onChange.bind(_this);
+	    _this.handleUserChange = _this.handleUserChange.bind(_this);
 	    _this.state = {
-	      repos: {},
-	      bio: {},
-	      isToggleOn: true
+	      repos: undefined,
+	      bio: undefined,
+	      username: ''
 	    };
-	    _this.handleClick = _this.handleClick.bind(_this);
+	    // This binding is necessary to make `this` work in the callback
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
 	
-	  _createClass(Git, [{
-	    key: 'handleClick',
-	    value: function handleClick() {
-	      this.setState(function (prevState) {
-	        return {
-	          isToggleOn: !prevState.isToggleOn
-	        };
-	      });
-	    }
-	  }, {
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
-	        this.setState = {
-	          repos: data.repos,
-	          bio: data.bio,
-	          isToggleOn: true
-	        };
-	      }.bind(this));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      // if (this.state) {
-	      //   return <FormattedBio bio={this.state.bio} />
-	      // }
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Git'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          'Loading...'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          'Remove'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.handleClick },
-	          this.state.isToggleOn ? 'ON' : 'OFF'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Git;
-	}(_react2.default.Component);
-	
-	var Toggle = function (_React$Component2) {
-	  _inherits(Toggle, _React$Component2);
-	
-	  function Toggle(props) {
-	    _classCallCheck(this, Toggle);
-	
-	    var _this2 = _possibleConstructorReturn(this, (Toggle.__proto__ || Object.getPrototypeOf(Toggle)).call(this, props));
-	
-	    _this2.onChange = _this2.onChange.bind(_this2);
-	    _this2.state = {
-	      repos: undefined,
-	      bio: undefined,
-	      isToggleOn: true
-	    };
-	    // This binding is necessary to make `this` work in the callback
-	    _this2.handleClick = _this2.handleClick.bind(_this2);
-	    return _this2;
-	  }
-	
-	  _createClass(Toggle, [{
+	  _createClass(SearchUserProfile, [{
 	    key: 'onChange',
 	    value: function onChange(state) {
 	      this.setState(state);
 	    }
 	  }, {
-	    key: 'callme',
-	    value: function callme() {
-	      var temp = ["a", "b"];
-	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
-	        console.log(data);
-	        temp = data.repos;
-	        //   this.setState({
-	        //     repos: data.repos,
-	        //     bio: data.bio,
-	        //     isToggleOn: !this.state.isToggleOn
-	        //   });
-	      });
-	      return temp;
-	    }
-	  }, {
-	    key: 'handleClick',
-	    value: function handleClick() {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
 	      // this.setState(prevState => ({
 	      //   isToggleOn: !prevState.isToggleOn,
 	      //   repos:this.callme()
 	      // }));
 	
-	      _GitUsers2.default.getGithubInfo(this.props.username).then(function (data) {
+	      _GitUsers2.default.getGithubInfo(this.state.username).then(function (data) {
 	        console.log(data);
 	        this.setState({
 	          repos: data.repos,
@@ -30119,35 +30030,62 @@
 	        });
 	      }.bind(this));
 	    }
-	
-	    //&& this.state.repos.length > 0 
-	
-	
+	  }, {
+	    key: 'handleUserChange',
+	    value: function handleUserChange(event) {
+	      this.setState({ username: event.target.value });
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      //let repos = this.state.repos;
+	      var reposStyle = {
+	        display: "block",
+	        padding: 10,
+	        margin: 10,
+	        color: "#333",
+	        fontFamily: "monospace",
+	        fontSize: "14px"
+	      };
+	      var repos = undefined;
+	      var repoList = undefined;
+	      var userBio = undefined;
+	      if (this.state.repos) {
+	        repos = this.state.repos;
+	        repoList = repos.map(function (repo) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: repo.id },
+	            repo.url
+	          );
+	        });
+	      }
+	      if (this.state.bio) {
+	        userBio = this.state.bio;
+	      }
+	
 	      return _react2.default.createElement(
-	        'div',
-	        null,
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUserChange }),
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.handleClick },
-	          this.state.isToggleOn ? 'ON' : 'OFF'
+	          { type: 'submit' },
+	          'Go'
 	        ),
-	        this.state.repos && this.state.repos.length > 0 && _react2.default.createElement(
-	          'h2',
+	        _react2.default.createElement(
+	          'ul',
 	          null,
-	          this.state.repos[0].url
-	        )
+	          repoList
+	        ),
+	        userBio && _react2.default.createElement('img', { src: userBio.avatar_url, width: '50' })
 	      );
 	    }
 	  }]);
 	
-	  return Toggle;
+	  return SearchUserProfile;
 	}(_react2.default.Component);
 	
-	exports.default = Toggle;
+	exports.default = SearchUserProfile;
 
 /***/ },
 /* 282 */

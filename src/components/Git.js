@@ -9,34 +9,39 @@ class SearchUserProfile extends React.Component {
     this.state = {
         repos:undefined,
         bio:undefined,
-        username: ''
+        username: '',
+        userNotFound: false
     };
     // This binding is necessary to make `this` work in the callback
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-    onChange(state) {
-        this.setState(state);
-    }
-
+  
+  onChange(state) {
+      this.setState(state);
+  }
 
   handleSubmit(e) {
     e.preventDefault();
-    // this.setState(prevState => ({
-    //   isToggleOn: !prevState.isToggleOn,
-    //   repos:this.callme()
-    // }));
-
      GitUsers.getGithubInfo(this.state.username).then(function(data) {
          console.log(data);
       this.setState({
         repos: data.repos,
         bio: data.bio,
-        isToggleOn: false
+        userNotFound: false,
+        username: ''
       });
       
+    }.bind(this),function(error){
+      this.setState({
+        repos:undefined,
+        bio:undefined,
+        userNotFound: true
+      });
+      console.log(error);
     }.bind(this));
 
   }
+
   handleUserChange(event) {
     this.setState({username: event.target.value});
   }
@@ -64,11 +69,16 @@ class SearchUserProfile extends React.Component {
     }
     
     return (
-        
+      <div>
+        <h1>Search Git Users</h1>
         <form onSubmit={this.handleSubmit}>
 
         <input type="text" value={this.state.username} onChange={this.handleUserChange} />
             <button type="submit">Go</button>
+            { this.state.userNotFound &&
+              <p>User not found</p>
+            }
+            
             <ul>{repoList}</ul>
             {
             userBio && 
@@ -77,8 +87,9 @@ class SearchUserProfile extends React.Component {
             }
             
         </form>
-      
+      </div>
     );
   }
 }
+
 export default SearchUserProfile
